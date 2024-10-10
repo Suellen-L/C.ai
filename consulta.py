@@ -3,31 +3,44 @@ import pymongo.errors
 from conexao import conecta
 
 def leUser():
-    colecaoU = conecta()
-    if colecaoU is not None:
-        procura = input("Qual produto está procurando: ")
-        lendo = colecaoU.find_one({'nick': procura})  # ajuste aqui
-    if lendo:
-        print("Aqui está: ", lendo)
+    colecoes = conecta()  
+    if colecoes is not None:
+        colecaoU = colecoes["Leitor"] 
+
+        procura = input("Qual nick está procurando: ")
+        lendo = colecaoU.find_one({'nick': procura}) 
+        if lendo:
+            print("Aqui está: ", lendo)
+        else:
+            print("Nop")
     else:
-        print("Nop")
+        print("Erro: Conexão com a coleção falhou.")
 
 def leLivro():
-    colecaoL = conecta()
-    if colecaoL is not None:
-        procura = input("Qual produto está procurando: ")
-        lendo = colecaoL.find_one({'titulo': procura})  # ajuste aqui
-    if lendo:
-        print("Aqui está: ", lendo)
+    colecoes = conecta()
+    if colecoes is not None:
+        colecaoL = colecoes["Blibioteca"] 
+
+        procura = input("Qual Livro está procurando: ")
+        lendo = colecaoL.find_one({'titulo': procura}) 
+        if lendo:
+            print("Aqui está: ", lendo)
+        else:
+            print("Nop")
     else:
-        print("Nop")
+        print("Erro: Conexão com a coleção falhou.")
 
 def leReacao():
-    colecaoI= conecta()
-    if colecaoI is not None:
-        procura = input("Qual produto está procurando: ")
-        lendo = colecaoI.find_one({'titulo': procura})  # ajuste aqui
-    if lendo:
-        print("Aqui está: ", lendo)
+    colecoes = conecta()
+    if colecoes is not None:
+        colecaoI = colecoes["Reacao"] 
+
+        procura = input("Qual interação está procurando: ")
+        lendo = colecaoI.find_one({'tipo': procura}) 
+        if lendo:
+            print("Aqui está: ", lendo)
+        else:
+            print("Nop")
     else:
-        print("Nop")
+        print("Erro: Conexão com a coleção falhou.")
+leReacao()

@@ -3,8 +3,10 @@ import pymongo.errors
 from conexao import conecta
 
 def inseriUser():
-    colecaoU = conecta()
-    if colecaoU is not None:
+    colecoes = conecta()
+    if colecoes is not None:
+        colecaoU = colecoes["Leitor"] 
+
         nick = input("qual o seu nick: ")
         email = input("qual o seu emeil: ")
         livrosLido = input(" ")
@@ -13,30 +15,54 @@ def inseriUser():
         seguidores = input(" ")
 
         doc = {"nick": nick, "email": email, "livrosLido": livrosLido, "livrosFavorito": livrosfavorito, "seguindo": seguindo, "seguidores": seguidores}
-        colocar = colecaoU.insert_one(doc)
-        colocar
+        try:
+            colocar = colecaoU.insert_one(doc)
+            print(f"Leitor adicionado, seu ID e: {colocar.inserted_id}")
+        except Exception as e:
+            print(f"Leitor não adicionado: {e}")
+    else:
+        print("Erro: Conexão com a coleção falhou.")
+
 
 def inseriLivro():
-    colecaoL = conecta()
-    if colecaoL is not None:
-        titulo = input("qual o seu nick: ")
-        autor = input("qual o seu emeil: ")
-        genero = input(" ")
-        editora = input(" ")
+    colecoes = conecta()
+    if colecoes is not None:
+        colecaoL = colecoes["Blibioteca"] 
+
+        titulo = input("qual o nome do livro: ")
+        autor = input("quem escreveu este livro: ")
+        genero = input("qual o genero desse livro: ")
+        editora = input("qual a editora publicou o livro: ")
         avaliacao = input(" ")
 
         doc = {"titulo": titulo, "autor": autor, "genero": genero, "editora": editora, "avaliacao": avaliacao}
-        colocar = colecaoL.insert_one(doc)
-        colocar
+        try:
+            colocar = colecaoL.insert_one(doc)
+            print(f"Livro adicionado, o ID e: {colocar.inserted_id}")
+        except Exception as e:
+            print(f"Livro não adicionado: {e}")
+    else:
+        print("Erro: Conexão com a coleção falhou.")
 
 def inseriReacao():
-    colecaoI = conecta()
-    if colecaoI is not None:
-        tipo = input("qual o seu nick: ")
-        nick = input("qual o seu emeil: ")
-        titulo = input(" ")
-        data = input(" ")
+    colecoes = conecta()
+    if colecoes is not None:
+        colecaoI = colecoes["Reacao"] 
 
-        doc = {"tipo": tipo, "nick": nick, "titulo": titulo, "data": data}
-        colocar = colecaoI.insert_one(doc)
-        colocar
+        tipo = input("sera qual interação? [curtir, comentar, compartilhar]: ")
+        if tipo == 'comentar':
+            interacao = input("qual o seu comentario: ")
+        else:
+            interacao = None 
+        nick = input("qual o seu nick: ")
+        titulo = input("qual o nome do livro: ")
+        data = input("qual a data de hoje: ")
+
+        doc = {"tipo": tipo, "interacao":interacao, "nick": nick, "titulo": titulo, "data": data}
+        try:
+            colocar = colecaoI.insert_one(doc)
+            print(f"Reação adicionado, seu ID e: {colocar.inserted_id}")
+        except Exception as e:
+            print(f"Reação não adicionado: {e}")
+    else:
+        print("Erro: Conexão com a coleção falhou.")
