@@ -5,7 +5,7 @@ from conexao import conecta
 def inseriUser():
     colecoes = conecta()
     if colecoes is not None:
-        colecaoU = colecoes["Leitor"] 
+        colecaoU = colecoes["Leitor"]
 
         nick = input("qual o seu nick: ")
         email = input("qual o seu emeil: ")
@@ -23,7 +23,6 @@ def inseriUser():
     else:
         print("Erro: Conexão com a coleção falhou.")
 
-
 def inseriLivro():
     colecoes = conecta()
     if colecoes is not None:
@@ -33,9 +32,8 @@ def inseriLivro():
         autor = input("quem escreveu este livro: ")
         genero = input("qual o genero desse livro: ")
         editora = input("qual a editora publicou o livro: ")
-        avaliacao = input(" ")
 
-        doc = {"titulo": titulo, "autor": autor, "genero": genero, "editora": editora, "avaliacao": avaliacao}
+        doc = {"titulo": titulo, "autor": autor, "genero": genero, "editora": editora}
         try:
             colocar = colecaoL.insert_one(doc)
             print(f"Livro adicionado, o ID e: {colocar.inserted_id}")

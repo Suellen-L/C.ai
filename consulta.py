@@ -16,6 +16,8 @@ def leUser():
     else:
         print("Erro: Conexão com a coleção falhou.")
 
+leUser()
+
 def leLivro():
     colecoes = conecta()
     if colecoes is not None:
