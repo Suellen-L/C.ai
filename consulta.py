@@ -16,12 +16,16 @@ def leUser():
     else:
         print("Erro: Conexão com a coleção falhou.")
 
-leUser()
 
 def leLivro():
     colecoes = conecta()
     if colecoes is not None:
         colecaoL = colecoes["Blibioteca"] 
+
+        livros = colecaoL.find({}, {"titulo": 1, "_id": 0})
+        print("Livros cadastrados:")
+        for livro in livros:
+            print(livro["titulo"])
 
         procura = input("Qual Livro está procurando: ")
         lendo = colecaoL.find_one({'titulo': procura}) 
@@ -31,6 +35,7 @@ def leLivro():
             print("Nop")
     else:
         print("Erro: Conexão com a coleção falhou.")
+leLivro()
 
 def leReacao():
     colecoes = conecta()
@@ -45,4 +50,3 @@ def leReacao():
             print("Nop")
     else:
         print("Erro: Conexão com a coleção falhou.")
-leReacao()
