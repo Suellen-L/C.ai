@@ -14,7 +14,7 @@ def leUser():
         else:
             print("Nop")
     else:
-        print("Erro: Conexão com a coleção falhou.")
+        print("Não conecto")
 
 
 def leLivro():
@@ -34,8 +34,7 @@ def leLivro():
         else:
             print("Nop")
     else:
-        print("Erro: Conexão com a coleção falhou.")
-leLivro()
+        print("Não conecto")
 
 def leReacao():
     colecoes = conecta()
@@ -49,4 +48,20 @@ def leReacao():
         else:
             print("Nop")
     else:
-        print("Erro: Conexão com a coleção falhou.")
+        print("Não conecto")
+
+def contar():
+    colecoes = conecta()
+    if colecoes is not None:
+        colecaoU = colecoes["Leitor"]
+        colecaoL = colecoes["Blibioteca"]
+        colecaoR = colecoes["Reacao"]
+
+        quantidadeU = colecaoU.count_documents({})
+        quantidadeL = colecaoL.count_documents({})
+        quantidadeR = colecaoR.count_documents({})
+        print(f"Leitores e/ou Autores: {quantidadeU}")
+        print(f"Blibioteca: {quantidadeL}")
+        print(f"Reações: {quantidadeR}")
+    else:
+        print("Não conecto")

@@ -9,19 +9,17 @@ def inseriUser():
 
         nick = input("qual o seu nick: ")
         email = input("qual o seu emeil: ")
-        livrosLido = input(" ")
-        livrosfavorito = input(" ")
-        seguindo = input(" ")
-        seguidores = input(" ")
 
-        doc = {"nick": nick, "email": email, "livrosLido": livrosLido, "livrosFavorito": livrosfavorito, "seguindo": seguindo, "seguidores": seguidores}
+
+        doc = {"nick": nick, "email": email}
         try:
+            
             colocar = colecaoU.insert_one(doc)
             print(f"Leitor adicionado, seu ID e: {colocar.inserted_id}")
         except Exception as e:
             print(f"Leitor não adicionado: {e}")
     else:
-        print("Erro: Conexão com a coleção falhou.")
+        print("Não conecto")
 
 def inseriLivro():
     colecoes = conecta()
@@ -40,7 +38,7 @@ def inseriLivro():
         except Exception as e:
             print(f"Livro não adicionado: {e}")
     else:
-        print("Erro: Conexão com a coleção falhou.")
+        print("Não conecto")
 
 def inseriReacao():
     colecoes = conecta()
@@ -63,4 +61,4 @@ def inseriReacao():
         except Exception as e:
             print(f"Reação não adicionado: {e}")
     else:
-        print("Erro: Conexão com a coleção falhou.")
+        print("Não conecto")

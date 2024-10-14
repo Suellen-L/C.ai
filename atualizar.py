@@ -14,21 +14,20 @@ def atualizaUser():
         seguindo = input("qual o nick do leitor que deseja seguir: ")
 
         adicioane = {}
-        if email:
-            adicioane["email"] = {"$set": email} 
-        if livrosLido:
+        if email.strip():
+            adicioane["email"] = email
+        if livrosLido.strip():
             adicioane["livrosLido"] = {"$push": livrosLido} 
-        if livrosFavorito:
+        if livrosFavorito.strip():
             adicioane["livrosFavorito"] = {"$push": livrosFavorito}
-        if seguindo:
+        if seguindo.strip():
             adicioane["seguindo"] = {"$push": seguindo}
 
-        foi = colecaoU.update_one({"nick": nick}, {"$push": adicioane})
-        
+        foi = colecaoU.update_one({"nick": nick}, {"$set": adicioane})        
         if foi.matched_count > 0:
             print(f"{foi.modified_count} documentos atualizados.")
         else:
-            print("Nenhuma alteração realizada.")
+            print("Não rolo")
 
 def atualizaLivro():
     colecoes = conecta()
@@ -46,7 +45,7 @@ def atualizaLivro():
         if foi.matched_count > 0:
             print(f"{foi.modified_count} documentos atualizados.")
         else:
-            print("Nenhuma alteração realizada.")
+            print("Não rolo")
 
 def melhoresL():
     colecoes = conecta()
@@ -54,27 +53,23 @@ def melhoresL():
         colecaoL = colecoes["Blibioteca"]
 
         livros = colecaoL.find({"avaliacoes": {"$exists": True, "$ne": []}})
-        livros_com_media = []
+        mediaL = []
 
         for livro in livros:
-            soma_avaliacoes = sum(livro["avaliacoes"])
-            total_avaliacoes = len(livro["avaliacoes"])
-            media_avaliacoes = soma_avaliacoes / total_avaliacoes
-            livros_com_media.append({
-                "titulo": livro["titulo"],
-                "media_avaliacoes": media_avaliacoes,
-                "total_avaliacoes": total_avaliacoes
-            })
+            somaA = sum(livro["avaliacoes"])
+            totalA = len(livro["avaliacoes"])
+            mediaA = somaA / totalA
+            mediaL.append({"titulo": livro["titulo"], "media_avaliacoes": mediaA, "total_avaliacoes": totalA})
 
-        livros_com_media.sort(key=lambda x: x["media_avaliacoes"], reverse=True)
+        mediaL.sort(key=lambda x: x["media_avaliacoes"], reverse=True)
 
-        melhores_livros = livros_com_media[:5]
+        melhores_livros = mediaL[:5]
 
         if melhores_livros:
             print("Os 5 melhores livros são:")
             for livro in melhores_livros:
-                print(f"Título: {livro['titulo']}, Média: {livro['media_avaliacoes']:.2f}, Avaliações: {livro['total_avaliacoes']}")
+                print(f"Titulo do livro: {livro['titulo']}, Média das avaliações: {livro['media_avaliacoes']:.2f}, Total de avaliações: {livro['total_avaliacoes']}")
         else:
-            print("Nenhum livro com avaliações foi encontrado.")
+            print("Sem avaliações por aqui")
 
 
