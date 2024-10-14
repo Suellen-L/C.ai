@@ -64,7 +64,7 @@ def menuAgregacao():
 
 def menuPrincipal():
     while True:
-        print("\nMenu Principal:")
+        print("\nBem vindo ao ~C.ai~:")
         print("1- Caso queria adicionar, consultar, atualizar ou remover")
         print("2- Para saber os melhores livros ou total de usuarios, livros e reações")
         print("3-Sair")
@@ -76,7 +76,30 @@ def menuPrincipal():
         elif escolha == "2":
             menuAgregacao()
         elif escolha == "3":
-            print("Saindo do sistema...")
+            print("adeus...")
             break
         else:
             print("Opção inválida. Tente novamente.")
+
+
+from pymongo import MongoClient
+import random
+from faker import Faker
+
+def automatizacao():
+    conexao = MongoClient("mongodb+srv://Suellen-L:ESTRELAPOLAR0909@cluster0.hv0wo.mongodb.net/")
+    banco = conexao["C-ai"]
+    colecaoI = banco["Reacao"]
+    faker = Faker()
+
+    try:
+        # Adicionando 80 interações
+        for _ in range(78):
+            interacao = {"Tipo": random.choice(['Curtida', 'Comentário', 'Salvar']),"nick": [],"titulo": [],"Data": faker.date_time_this_year()}
+            colecaoI.insert_one(interacao)
+
+        print('Dados adicionados.')
+    except Exception as e:
+        print(f'Ocorreu um erro: {e}')
+    finally:
+        conexao.close()

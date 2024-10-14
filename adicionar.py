@@ -45,7 +45,7 @@ def inseriReacao():
     if colecoes is not None:
         colecaoI = colecoes["Reacao"] 
 
-        tipo = input("sera qual interação? [curtir, comentar, compartilhar]: ")
+        tipo = input("sera qual interação? [curtir, comentar, salvar]: ")
         if tipo == 'comentar':
             interacao = input("qual o seu comentario: ")
         else:
